@@ -31,11 +31,11 @@ async fn main() {
         .route("/health", get(health_check))
         .with_state(pool);
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:5000")
         .await
-        .expect("Failed to bind to port 3000");
+        .expect("Failed to bind to port 5000");
 
-    println!("🚀 Server running on http://0.0.0.0:3000");
+    println!("🚀 Server running on http://0.0.0.0:5000");
 
     axum::serve(listener, app).await.unwrap();
 }
