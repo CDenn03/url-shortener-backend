@@ -5,16 +5,19 @@ use axum::{
 };
 use thiserror::Error;
 use crate::models::response::ApiResponse;
+
 #[derive(Error, Debug)]
 pub enum AppError {
     #[error("invalid input")]
     Validation,
     #[error("not found")]
     NotFound,
+    #[allow(dead_code)]
     #[error("conflict")]
     Conflict,
     #[error("database error")]
     Database(#[from] sqlx::Error),
+    #[allow(dead_code)]
     #[error("internal error")]
     Internal,
 }

@@ -3,7 +3,13 @@ use axum::{Router, routing::get, extract::State, Json};
 use sqlx::PgPool;
 use serde_json::json;
 
+mod repositories;
+mod models;
+mod errors;
 mod db;
+mod services;
+mod handlers;
+mod routes;
 
 async fn health_check(State(pool): State<PgPool>) -> Json<serde_json::Value> {
     match sqlx::query("SELECT 1").execute(&pool).await {
@@ -29,6 +35,7 @@ async fn main() {
 
     let app = Router::new()
         .route("/health", get(health_check))
+        .nest("/api", routes::router::router())
         .with_state(pool);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:5000")
